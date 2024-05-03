@@ -57,7 +57,7 @@ float CNPC_FloorTurret::fMaxTipControllerAngularVelocity = 90.0f * 90.0f;
 
 #define	LASER_BEAM_SPRITE			"effects/laser1.vmt"
 
-#define	FLOOR_TURRET_MODEL			"models/combine_turrets/floor_turret.mdl"
+#define	FLOOR_TURRET_MODEL			"models/npcs/turret/turret.mdl"
 #define	FLOOR_TURRET_MODEL_CITIZEN	"models/combine_turrets/citizen_turret.mdl"
 #define FLOOR_TURRET_GLOW_SPRITE	"sprites/glow1.vmt"
 // #define FLOOR_TURRET_BC_YAW			"aim_yaw"
