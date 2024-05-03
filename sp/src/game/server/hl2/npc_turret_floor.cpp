@@ -1559,6 +1559,8 @@ bool CNPC_FloorTurret::PreThink( turretState_e state )
 //-----------------------------------------------------------------------------
 void CNPC_FloorTurret::SetEyeState( eyeState_t state )
 {
+	//Portal turrets don't have eye glows
+	return;
 	// Must have a valid eye to affect
 #ifdef MAPBASE
 	if ( !m_hEyeGlow && !HasSpawnFlags(SF_FLOOR_TURRET_NO_SPRITE) )
@@ -1838,6 +1840,7 @@ void CNPC_FloorTurret::ToggleUse ( CBaseEntity *pActivator, CBaseEntity *pCaller
 		Disable();
 		break;
 	case USE_ON:
+		UTIL_ClientPrintAll(HUD_PRINTCONSOLE, "Turret USE_ON");
 		Enable();
 		break;
 	case USE_SET:
