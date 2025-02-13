@@ -2257,8 +2257,7 @@ ScriptHook_t	CBaseEntity::g_Hook_ModifyEmitSoundParams;
 ScriptHook_t	CBaseEntity::g_Hook_ModifySentenceParams;
 #endif
 
-BEGIN_ENT_SCRIPTDESC_ROOT( CBaseEntity, "Root class of all server-side entities" )
-	DEFINE_SCRIPT_INSTANCE_HELPER( &g_BaseEntityScriptInstanceHelper )
+BEGIN_ENT_SCRIPTDESC_ROOT_WITH_HELPER( CBaseEntity, "Root class of all server-side entities", &g_BaseEntityScriptInstanceHelper )
 	DEFINE_SCRIPTFUNC_NAMED( ConnectOutputToScript, "ConnectOutput", "Adds an I/O connection that will call the named function when the specified output fires"  )
 	DEFINE_SCRIPTFUNC_NAMED( DisconnectOutputFromScript, "DisconnectOutput", "Removes a connected script function from an I/O event."  )
 	
@@ -10154,7 +10153,7 @@ void CBaseEntity::SetScriptOwnerEntity(HSCRIPT pOwner)
 //	ScriptFindKey, ScriptGetFirstSubKey, ScriptGetString, 
 //	ScriptGetInt, ScriptGetFloat, ScriptGetNextKey
 //-----------------------------------------------------------------------------
-HSCRIPT CBaseEntity::ScriptGetModelKeyValues( void )
+HSCRIPT_RC CBaseEntity::ScriptGetModelKeyValues( void )
 {
 	KeyValues *pModelKeyValues = new KeyValues("");
 	HSCRIPT hScript = NULL;
@@ -10163,16 +10162,12 @@ HSCRIPT CBaseEntity::ScriptGetModelKeyValues( void )
 
 	if ( pModelKeyValues->LoadFromBuffer( pszModelName, pBuffer ) )
 	{
-		// UNDONE: how does destructor get called on this
 #ifdef MAPBASE_VSCRIPT
-		m_pScriptModelKeyValues = hScript = scriptmanager->CreateScriptKeyValues( g_pScriptVM, pModelKeyValues, true ); // Allow VScript to delete this when the instance is removed.
+		hScript = scriptmanager->CreateScriptKeyValues( g_pScriptVM, pModelKeyValues );
 #else
+		// UNDONE: how does destructor get called on this
 		m_pScriptModelKeyValues = new CScriptKeyValues( pModelKeyValues );
-#endif
-
 		// UNDONE: who calls ReleaseInstance on this??? Does name need to be unique???
-
-#ifndef MAPBASE_VSCRIPT
 		hScript = g_pScriptVM->RegisterInstance( m_pScriptModelKeyValues );
 #endif
 		
