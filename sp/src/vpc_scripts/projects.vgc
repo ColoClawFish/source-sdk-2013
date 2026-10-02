@@ -141,3 +141,8 @@ $Project "vvis_launcher"
 	"utils\vvis_launcher\vvis_launcher.vpc" [$WIN32]
 }
 
+$Project "gamepadui"
+{
+	"game\gamepadui\gamepadui_hl2.vpc"		[($WIN32||$LINUX) && $HL2]
+	"game\gamepadui\gamepadui_episodic.vpc"	[($WIN32||$LINUX) && $EPISODIC]
+}
